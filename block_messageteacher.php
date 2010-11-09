@@ -3,7 +3,6 @@
 class block_messageteacher extends block_base {
     function init() {
         $this->title = 'Message My Teacher';
-        $this->version = 2009011900;
     }
 
     function get_content() {
