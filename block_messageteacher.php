@@ -6,21 +6,24 @@ class block_messageteacher extends block_base {
     }
 
     function get_content() {
-        global $COURSE, $CFG, $USER;
+        global $COURSE, $CFG, $USER, $DB;
 
-        $this->content->text='';
-        $this->content->footer='';
+        $this->content->text = '';
+        $this->content->footer = '';
 
-        $sql="SELECT userid
-              FROM  {$CFG->prefix}role_assignments
-                  JOIN {$CFG->prefix}context ON contextid = {$CFG->prefix}context.id AND contextlevel= 50
-              WHERE {$CFG->prefix}context.instanceid=$COURSE->id AND userid <> $USER->id AND roleid in ($CFG->block_messageteacher_roles) AND hidden=0";
-        if(!$teachers=get_records_sql($sql)){
-            return '';
-        }
-        foreach ($teachers as $teacherid){
-            $teacher=get_record('user','id',$teacherid->userid);
-            $this->content->text .= "<a target='message_2'  href='$CFG->wwwroot/message/discussion.php?id=$teacher->id' onclick=\"this.target='message_2';return openpopup('/message/discussion.php?id=$teacher->id', 'message_2', 'menubar=0,location=0,scrollbars,status,resizable,width=400,height=500', 0);\">$teacher->firstname $teacher->lastname</a><br>";
+        $roles = explode(',', $CFG->block_messageteacher_roles);        
+        list($usql, $params) = $DB->get_in_or_equal($roles);
+        $params = array_merge(array($COURSE->id, $USER->id), $params);
+        $select = 'SELECT userid ';
+        $from = 'FROM {role_assignments}
+                  JOIN {context} AS c ON contextid = c.id AND contextlevel= 50 ';
+        $where = 'WHERE c.instanceid = ? AND userid <> ? AND roleid '.$usql;
+
+        if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
+            foreach ($teachers as $teacherid) {
+                $teacher = $DB->get_record('user', array('id' => $teacherid->userid));
+                $this->content->text .= '<a href="'.$CFG->wwwroot.'/message/discussion.php?id='.$teacher->id.'">'.$teacher->firstname.' '.$teacher->lastname.'</a><br />';
+            }
         }
         return $this->content;
     }
