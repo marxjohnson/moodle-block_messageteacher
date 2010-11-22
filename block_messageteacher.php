@@ -22,7 +22,8 @@ class block_messageteacher extends block_base {
         if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
             foreach ($teachers as $teacherid) {
                 $teacher = $DB->get_record('user', array('id' => $teacherid->userid));
-                $this->content->text .= '<a href="'.$CFG->wwwroot.'/message/discussion.php?id='.$teacher->id.'">'.$teacher->firstname.' '.$teacher->lastname.'</a><br />';
+                $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
+                $this->content->text .= html_writer::tag('a', $teacher->firstname.' '.$teacher->lastname, array('href' => $url->out()));
             }
         }
         return $this->content;
