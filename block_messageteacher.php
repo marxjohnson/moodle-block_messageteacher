@@ -2,7 +2,7 @@
 
 class block_messageteacher extends block_base {
     function init() {
-        $this->title = 'Message My Teacher';
+        $this->title = get_string('pluginname', 'block_messageteacher');
     }
 
     function get_content() {
