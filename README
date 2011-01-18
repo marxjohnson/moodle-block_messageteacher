@@ -4,6 +4,6 @@ This block displays a list of all teachers on the current course, with links to 
 
 To install, place all files in /blocks/messageteacher and visit /admin/index.php in your browser.
 
-This block was written by Mike Worth and Mark Johnson <mark.johson@tauntons.ac.uk> and is Copyright Taunton's College, Southampton.
+This block was written by Mike Worth and Mark Johnson <mark.johnson@tauntons.ac.uk> and is Copyright Taunton's College, Southampton.
 Released Under the GNU General Public Licence http://www.gnu.org/licenses/gpl-2.0.html
 
