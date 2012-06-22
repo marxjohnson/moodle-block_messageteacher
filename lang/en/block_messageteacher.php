@@ -24,6 +24,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['enablegroups'] = 'Enable Group Support';
+$string['groupsdesc'] = 'When enabled, students will only see teachers in the same group as them';
+$string['nogroupmembership'] = 'You\'re not a member of any group';
+$string['nogroupteachers'] = 'Teacher not yet assigned to your group';
 $string['pluginname'] = 'Message My Teacher';
 $string['pluginnameplural'] = 'Message My Teachers';
 $string['teachersinclude']         = 'Teachers include:';

@@ -30,3 +30,8 @@ $settings->add(new admin_setting_pickroles('block_messageteacher_roles',
                                            get_string('rolesdesc', 'block_messageteacher'),
                                            array('moodle/legacy:teacher'),
                                            PARAM_TEXT));
+
+$settings->add(new admin_setting_configcheckbox('block_messageteacher_groups',
+                                           get_string('enablegroups', 'block_messageteacher'),
+                                           get_string('groupsdesc', 'block_messageteacher'),
+                                           0));

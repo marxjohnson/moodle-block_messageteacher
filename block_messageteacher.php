@@ -44,6 +44,9 @@ class block_messageteacher extends block_base {
         $this->content->text = '';
         $this->content->footer = '';
 
+	$usegroups = $CFG->block_messageteacher_groups;
+	$coursehasgroups = groups_get_all_groups($COURSE->id);
+
         $roles = explode(',', $CFG->block_messageteacher_roles);
         list($usql, $params) = $DB->get_in_or_equal($roles);
         $params = array_merge(array($COURSE->id, $USER->id, CONTEXT_COURSE), $params);
@@ -54,11 +57,38 @@ class block_messageteacher extends block_base {
         $where = 'WHERE c.instanceid = ? AND userid != ? AND c.contextlevel = ? AND roleid '.$usql;
 
         if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
-            foreach ($teachers as $teacher) {
-                $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
-                $this->content->text .= html_writer::tag('a', fullname($teacher), array('href' => $url));
-            }
+
+            if ($usegroups && $coursehasgroups) {
+                $groupteachers = array();
+	        $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
+		if (!empty($usergroupings)) {
+		    foreach ($usergroupings as $usergroups) {
+			foreach($usergroups as $usergroup) {
+	                    foreach ($teachers as $teacher) {
+                                if (groups_is_member($usergroup, $teacher->id)) {
+                                    $groupteachers[$teacher->id] = $teacher;
+                                }
+                            }
+		        }
+                    }
+                    if (empty($groupteachers)) {
+                        $this->content->text = get_string('nogroupteachers', 'block_messageteacher');
+                        return $this->content;
+                    } else {
+                        $teachers = $groupteachers;
+                    }
+	        } else {
+                    $this->content->text = get_string('nogroupmembership', 'block_messageteacher');
+                    return $this->content;
+		}
+	    } 
+
+	    foreach ($teachers as $teacher) {
+	        $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
+	        $this->content->text .= html_writer::tag('a', fullname($teacher), array('href' => $url));
+	    }
         }
+        
         return $this->content;
     }
 }
