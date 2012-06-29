@@ -35,3 +35,8 @@ $settings->add(new admin_setting_configcheckbox('block_messageteacher_groups',
                                            get_string('enablegroups', 'block_messageteacher'),
                                            get_string('groupsdesc', 'block_messageteacher'),
                                            0));
+
+$settings->add(new admin_setting_configcheckbox('block_messageteacher_showuserpictures',
+                                           get_string('showuserpictures', 'block_messageteacher'),
+                                           get_string('showuserpicturesdesc', 'block_messageteacher'),
+                                           0));

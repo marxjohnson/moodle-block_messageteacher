@@ -1,3 +1,14 @@
-.block_messageteacher .content a {
-    display: block;
+.block_messageteacher ul {
+    list-style:none;
+    margin: 0;
+}
+
+.block_messageteacher li a span {
+    vertical-align: top;
+}
+
+
+.block.block_messageteacher .content .userpicture {
+    height: 50px;
+    width: 50px;
 }

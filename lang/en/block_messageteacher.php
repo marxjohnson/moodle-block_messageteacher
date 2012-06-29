@@ -30,5 +30,7 @@ $string['nogroupmembership'] = 'You\'re not a member of any group';
 $string['nogroupteachers'] = 'Teacher not yet assigned to your group';
 $string['pluginname'] = 'Message My Teacher';
 $string['pluginnameplural'] = 'Message My Teachers';
+$string['showuserpictures'] = 'Show User Pictures';
+$string['showuserpicturesdesc'] = 'If enabled, teachers\' pictures will show alongside their name';
 $string['teachersinclude']         = 'Teachers include:';
 $string['rolesdesc']         = 'Select all the roles which are teachers or people whom students may wish to ask for help';

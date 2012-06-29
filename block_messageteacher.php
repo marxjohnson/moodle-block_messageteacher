@@ -39,18 +39,18 @@ class block_messageteacher extends block_base {
      * @return void
      */
     public function get_content() {
-        global $COURSE, $CFG, $USER, $DB;
+        global $COURSE, $CFG, $USER, $DB, $OUTPUT;
 
         $this->content->text = '';
         $this->content->footer = '';
 
-	$usegroups = $CFG->block_messageteacher_groups;
-	$coursehasgroups = groups_get_all_groups($COURSE->id);
+        $usegroups = $CFG->block_messageteacher_groups;
+        $coursehasgroups = groups_get_all_groups($COURSE->id);
 
         $roles = explode(',', $CFG->block_messageteacher_roles);
         list($usql, $params) = $DB->get_in_or_equal($roles);
         $params = array_merge(array($COURSE->id, $USER->id, CONTEXT_COURSE), $params);
-        $select = 'SELECT u.id, u.firstname, u.lastname ';
+        $select = 'SELECT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email ';
         $from = 'FROM {role_assignments} ra
             JOIN {context} AS c ON ra.contextid = c.id
             JOIN {user} AS u ON u.id = ra.userid ';
@@ -61,20 +61,20 @@ class block_messageteacher extends block_base {
                 try {
                     $groupteachers = array();
                     $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
-		    if (empty($usergroupings)) {
+                    if (empty($usergroupings)) {
                         throw new Exception('nogroupmembership');
                     } else {
-		        foreach ($usergroupings as $usergroups) {
+                        foreach ($usergroupings as $usergroups) {
                             if (empty($usergroups)) {
                                 throw new Exception('nogroupmembership');
                             } else {
                                 foreach($usergroups as $usergroup) {
-	                            foreach ($teachers as $teacher) {
+                                    foreach ($teachers as $teacher) {
                                         if (groups_is_member($usergroup, $teacher->id)) {
                                             $groupteachers[$teacher->id] = $teacher;
                                         }
                                     }
-	                        }
+                                }
                             }
                         }
                         if (empty($groupteachers)) {
@@ -86,13 +86,23 @@ class block_messageteacher extends block_base {
                 } catch (Exception $e) {
                     $this->content->text = get_string($e->getMessage(), 'block_messageteacher');
                     return $this->content;
-		}
-	    } 
+                }
+            }
 
-	    foreach ($teachers as $teacher) {
-	        $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
-	        $this->content->text .= html_writer::tag('a', fullname($teacher), array('href' => $url));
-	    }
+            $items = array();
+            foreach ($teachers as $teacher) {
+                $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
+                $picture = '';
+                if (isset($CFG->block_messageteacher_showuserpictures) && $CFG->block_messageteacher_showuserpictures) {
+                    $picture = new user_picture($teacher);
+                    $picture->link = false;
+                    $picture->size = 50;
+                    $picture = $OUTPUT->render($picture);
+                }
+                $name = html_writer::tag('span', fullname($teacher));
+                $items[] = html_writer::tag('a', $picture.$name, array('href' => $url));
+            }
+            $this->content->text = html_writer::alist($items);
         }
         
         return $this->content;
