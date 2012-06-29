@@ -57,28 +57,34 @@ class block_messageteacher extends block_base {
         $where = 'WHERE c.instanceid = ? AND userid != ? AND c.contextlevel = ? AND roleid '.$usql;
 
         if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
-
             if ($usegroups && $coursehasgroups) {
-                $groupteachers = array();
-	        $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
-		if (!empty($usergroupings)) {
-		    foreach ($usergroupings as $usergroups) {
-			foreach($usergroups as $usergroup) {
-	                    foreach ($teachers as $teacher) {
-                                if (groups_is_member($usergroup, $teacher->id)) {
-                                    $groupteachers[$teacher->id] = $teacher;
-                                }
-                            }
-		        }
-                    }
-                    if (empty($groupteachers)) {
-                        $this->content->text = get_string('nogroupteachers', 'block_messageteacher');
-                        return $this->content;
+                try {
+                    $groupteachers = array();
+                    $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
+		    if (empty($usergroupings)) {
+                        throw new Exception('nogroupmembership');
                     } else {
-                        $teachers = $groupteachers;
+		        foreach ($usergroupings as $usergroups) {
+                            if (empty($usergroups)) {
+                                throw new Exception('nogroupmembership');
+                            } else {
+                                foreach($usergroups as $usergroup) {
+	                            foreach ($teachers as $teacher) {
+                                        if (groups_is_member($usergroup, $teacher->id)) {
+                                            $groupteachers[$teacher->id] = $teacher;
+                                        }
+                                    }
+	                        }
+                            }
+                        }
+                        if (empty($groupteachers)) {
+                            throw new Exception('nogroupteachers');
+                        } else {
+                            $teachers = $groupteachers;
+                        }
                     }
-	        } else {
-                    $this->content->text = get_string('nogroupmembership', 'block_messageteacher');
+                } catch (Exception $e) {
+                    $this->content->text = get_string($e->getMessage(), 'block_messageteacher');
                     return $this->content;
 		}
 	    } 
