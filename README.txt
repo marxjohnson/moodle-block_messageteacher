@@ -7,7 +7,7 @@ each one.
 To install, place all files in /blocks/messageteacher and visit /admin/index.php in your browser
 
 This block was written by Mike Worth <mike@mike-worth.com> and Mark Johnson <mark.johnson@tauntons.ac.uk> and is
-Copyright Taunton's College, Southampton. It currently maintained by Mark Johnson.
+Copyright Taunton's College, Southampton. It is currently maintained by Mark Johnson.
 
 Development of user image and group support sponsored by Proud Photography (http://www.ProudPhotography.com) – Online Photography School.
 
