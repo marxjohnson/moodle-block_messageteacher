@@ -42,3 +42,8 @@ $settings->add(new admin_setting_configcheckbox('block_messageteacher/showuserpi
                                            get_string('showuserpictures', 'block_messageteacher'),
                                            get_string('showuserpicturesdesc', 'block_messageteacher'),
                                            0));
+
+$settings->add(new admin_setting_configcheckbox('block_messageteacher/includecoursecat',
+                                           get_string('includecoursecat', 'block_messageteacher'),
+                                           get_string('includecoursecat', 'block_messageteacher'),
+                                           0));

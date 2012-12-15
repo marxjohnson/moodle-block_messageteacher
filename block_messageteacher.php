@@ -51,13 +51,21 @@ class block_messageteacher extends block_base {
         $coursehasgroups = groups_get_all_groups($COURSE->id);
 
         $roles = explode(',', get_config('block_messageteacher', 'roles'));
-        list($usql, $params) = $DB->get_in_or_equal($roles);
-        $params = array_merge(array($COURSE->id, $USER->id, CONTEXT_COURSE), $params);
-        $select = 'SELECT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email ';
+        list($usql, $uparams) = $DB->get_in_or_equal($roles);
+        $params = array($COURSE->id, CONTEXT_COURSE);
+        $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email ';
         $from = 'FROM {role_assignments} ra
             JOIN {context} AS c ON ra.contextid = c.id
             JOIN {user} AS u ON u.id = ra.userid ';
-        $where = 'WHERE c.instanceid = ? AND userid != ? AND c.contextlevel = ? AND roleid '.$usql;
+        $where = 'WHERE ((c.instanceid = ? AND c.contextlevel = ?)';
+        if (get_config('block_messageteacher', 'includecoursecat')) {
+            $params = array_merge($params, array($COURSE->category, CONTEXT_COURSECAT));
+            $where .= ' OR (c.instanceid = ? AND c.contextlevel = ?))';
+        } else {
+            $where .= ')';
+        }
+        $params = array_merge($params, array($USER->id), $uparams);
+        $where .= 'AND userid != ? AND roleid '.$usql;
 
         if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
             if ($usegroups && $coursehasgroups) {

@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['enablegroups'] = 'Enable Group Support';
 $string['groupsdesc'] = 'When enabled, students will only see teachers in the same group as them';
+$string['includecoursecat'] = 'Include teachers from Course Category';
+$string['includecoursecatdesc'] = 'When enabled, users with the teacher roles in the course\'s parent category will be displayed, as well as those assigned in the course itself';
 $string['nogroupmembership'] = 'You\'re not a member of any group';
 $string['nogroupteachers'] = 'Teacher not yet assigned to your group';
 $string['pluginname'] = 'Message My Teacher';
