@@ -25,6 +25,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $settings->add(new admin_setting_pickroles('block_messageteacher/roles',
                                            get_string('teachersinclude', 'block_messageteacher'),
                                            get_string('rolesdesc', 'block_messageteacher'),

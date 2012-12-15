@@ -23,6 +23,7 @@
  * @copyright  2010 onwards Tauntons College, UK
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 $string['enablegroups'] = 'Enable Group Support';
 $string['groupsdesc'] = 'When enabled, students will only see teachers in the same group as them';
