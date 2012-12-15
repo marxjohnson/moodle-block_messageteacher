@@ -45,5 +45,5 @@ $settings->add(new admin_setting_configcheckbox('block_messageteacher/showuserpi
 
 $settings->add(new admin_setting_configcheckbox('block_messageteacher/includecoursecat',
                                            get_string('includecoursecat', 'block_messageteacher'),
-                                           get_string('includecoursecat', 'block_messageteacher'),
+                                           get_string('includecoursecatdesc', 'block_messageteacher'),
                                            0));
