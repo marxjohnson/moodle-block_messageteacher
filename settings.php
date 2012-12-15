@@ -25,18 +25,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$settings->add(new admin_setting_pickroles('block_messageteacher_roles',
+$settings->add(new admin_setting_pickroles('block_messageteacher/roles',
                                            get_string('teachersinclude', 'block_messageteacher'),
                                            get_string('rolesdesc', 'block_messageteacher'),
                                            array('moodle/legacy:teacher'),
                                            PARAM_TEXT));
 
-$settings->add(new admin_setting_configcheckbox('block_messageteacher_groups',
+$settings->add(new admin_setting_configcheckbox('block_messageteacher/groups',
                                            get_string('enablegroups', 'block_messageteacher'),
                                            get_string('groupsdesc', 'block_messageteacher'),
                                            0));
 
-$settings->add(new admin_setting_configcheckbox('block_messageteacher_showuserpictures',
+$settings->add(new admin_setting_configcheckbox('block_messageteacher/showuserpictures',
                                            get_string('showuserpictures', 'block_messageteacher'),
                                            get_string('showuserpicturesdesc', 'block_messageteacher'),
                                            0));

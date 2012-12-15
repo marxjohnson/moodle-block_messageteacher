@@ -44,10 +44,10 @@ class block_messageteacher extends block_base {
         $this->content->text = '';
         $this->content->footer = '';
 
-        $usegroups = $CFG->block_messageteacher_groups;
+        $usegroups = get_config('block_messageteacher', 'groups');
         $coursehasgroups = groups_get_all_groups($COURSE->id);
 
-        $roles = explode(',', $CFG->block_messageteacher_roles);
+        $roles = explode(',', get_config('block_messageteacher', 'roles'));
         list($usql, $params) = $DB->get_in_or_equal($roles);
         $params = array_merge(array($COURSE->id, $USER->id, CONTEXT_COURSE), $params);
         $select = 'SELECT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email ';
@@ -93,7 +93,7 @@ class block_messageteacher extends block_base {
             foreach ($teachers as $teacher) {
                 $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
                 $picture = '';
-                if (isset($CFG->block_messageteacher_showuserpictures) && $CFG->block_messageteacher_showuserpictures) {
+                if (get_config('block_messageteacher', 'showuserpictures')) {
                     $picture = new user_picture($teacher);
                     $picture->link = false;
                     $picture->size = 50;
