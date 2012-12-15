@@ -41,6 +41,7 @@ class block_messageteacher extends block_base {
     public function get_content() {
         global $COURSE, $CFG, $USER, $DB, $OUTPUT;
 
+        $this->content = new stdClass;
         $this->content->text = '';
         $this->content->footer = '';
 
