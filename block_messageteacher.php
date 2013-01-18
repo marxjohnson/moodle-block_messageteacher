@@ -40,6 +40,9 @@ class block_messageteacher extends block_base {
      * @access public
      * @return void
      */
+    public function has_config(){
+        return true;
+    }
     public function get_content() {
         global $COURSE, $CFG, $USER, $DB, $OUTPUT;
 
