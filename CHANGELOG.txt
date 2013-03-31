@@ -1,3 +1,6 @@
+New in 2.2.1
+* Integrated bugfix correcting config display from dtgillis
+
 New in 2.2
 * More secure and PHP Strict-compliant code
 * New option to allow users teachers from the course category to be displayed as well
