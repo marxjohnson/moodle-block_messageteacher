@@ -14,19 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * Defines metadata for the Message My Teacher block
+ * Capability definitions for the block_messageteacher block
  *
- * @package    block_messageteacher
- * @author     Mark Johnson <mark.johnson@tauntons.ac.uk>
- * @copyright  2010 onwards Tauntons College, UK
+ * @package    block
+ * @subpackage messageteacher
+ * @copyright  2013 onwards Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2013031301;
-$plugin->requires = 2011120500;
-$plugin->component = 'block_messageteacher';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.2.1';
+$capabilities = array(
+
+    // New standard capability 'addinstance'.
+    'block/messageteacher:addinstance' => array(
+        'captype'       => 'write',
+        'contextlevel'  => CONTEXT_COURSE,
+        'archetypes'    => array(
+            'editingteacher'    => CAP_ALLOW,
+            'manager'           => CAP_ALLOW
+        ),
+        'clonepermissionsfrom'  => 'moodle/site:manageblocks'
+    ),
+
+);

@@ -1,5 +1,6 @@
 New in 2.2.1
 * Integrated bugfix correcting config display from dtgillis
+* Added new addinstance permission
 
 New in 2.2
 * More secure and PHP Strict-compliant code
