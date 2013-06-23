@@ -49,4 +49,6 @@ function xmldb_block_messageteacher_upgrade($oldversion=0) {
 
         upgrade_block_savepoint(true, 2012121501, 'messageteacher');
     }
+
+    return $result;
 }
