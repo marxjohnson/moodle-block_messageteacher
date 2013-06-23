@@ -69,8 +69,9 @@ class block_messageteacher extends block_base {
         }
         $params = array_merge($params, array($USER->id), $uparams);
         $where .= 'AND userid != ? AND roleid '.$usql;
+        $order = ' ORDER BY u.firstname ASC, u.lastname';
 
-        if ($teachers = $DB->get_records_sql($select.$from.$where, $params)) {
+        if ($teachers = $DB->get_records_sql($select.$from.$where.$order, $params)) {
             if ($usegroups && $coursehasgroups) {
                 try {
                     $groupteachers = array();
