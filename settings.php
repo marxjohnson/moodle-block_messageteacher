@@ -47,3 +47,8 @@ $settings->add(new admin_setting_configcheckbox('block_messageteacher/includecou
                                            get_string('includecoursecat', 'block_messageteacher'),
                                            get_string('includecoursecatdesc', 'block_messageteacher'),
                                            0));
+
+$settings->add(new admin_setting_configcheckbox('block_messageteacher/appendurl',
+                                           get_string('appendurl', 'block_messageteacher'),
+                                           get_string('appendurldesc', 'block_messageteacher'),
+                                           0));

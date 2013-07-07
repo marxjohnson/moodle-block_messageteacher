@@ -106,7 +106,12 @@ class block_messageteacher extends block_base {
 
             $items = array();
             foreach ($teachers as $teacher) {
-                $url = new moodle_url('/message/discussion.php', array('id' => $teacher->id));
+                $urlparams = array (
+                    'courseid' => $COURSE->id, 
+                    'referurl' => $this->page->url->out(), 
+                    'recipientid' => $teacher->id
+                );
+                $url = new moodle_url('/blocks/messageteacher/message.php', $urlparams);
                 $picture = '';
                 if (get_config('block_messageteacher', 'showuserpictures')) {
                     $picture = new user_picture($teacher);
