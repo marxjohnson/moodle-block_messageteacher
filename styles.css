@@ -1,14 +1,13 @@
-.block_messageteacher ul {
-    list-style:none;
-    margin: 0;
+#block_messageteacher_output {
+    width: 50% !important;
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    border: 1px solid #E3E3E3;
+    padding: 2em;
 }
 
-.block_messageteacher li a span {
-    vertical-align: top;
-}
-
-
-.block.block_messageteacher .content .userpicture {
-    height: 50px;
-    width: 50px;
+.messageteacher_confirm {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 1em;
 }

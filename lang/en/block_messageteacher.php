@@ -36,6 +36,7 @@ $string['messageprovider:message'] = 'A message sent using the Message My Teache
 $string['messagefrom'] = 'Message From {$a}';
 $string['messageheader'] = 'Enter your message for {$a}';
 $string['messagefailed'] = 'Message sending failed';
+$string['messagesent'] = 'Message Sent!';
 $string['messagetext'] = 'Message text';
 $string['nogroupmembership'] = 'You\'re not a member of any group';
 $string['nogroupteachers'] = 'Teacher not yet assigned to your group';

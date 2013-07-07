@@ -49,7 +49,10 @@ if ($mform->is_cancelled()) {
         }
     }
     if ($ajax) {
-        echo json_encode(array('state' => 1, 'output' => get_string('messagesent', 'block_messageteacher'));
+        $output = html_writer::tag('p', 
+                                    get_string('messagesent', 'block_messageteacher'),
+                                    array('class' => 'messageteacher_confirm'));
+        echo json_encode(array('state' => 1, 'output' => $output));
     } else {
         redirect($data->referurl);
     }

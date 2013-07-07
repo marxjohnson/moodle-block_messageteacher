@@ -44,7 +44,11 @@ class block_messageteacher extends block_base {
         return true;
     }
     public function get_content() {
-        global $COURSE, $CFG, $USER, $DB, $OUTPUT;
+        global $COURSE, $CFG, $USER, $DB, $OUTPUT, $PAGE;
+
+        if ($this->content !== null) {
+            return $this->content;
+        }
 
         $this->content = new stdClass;
         $this->content->text = '';
@@ -120,11 +124,15 @@ class block_messageteacher extends block_base {
                     $picture = $OUTPUT->render($picture);
                 }
                 $name = html_writer::tag('span', fullname($teacher));
-                $items[] = html_writer::tag('a', $picture.$name, array('href' => $url));
+                $attrs = array('href' => $url, 'class' => 'messageteacher_link');
+                $items[] = html_writer::tag('a', $picture.$name, $attrs);
             }
             $this->content->text = html_writer::alist($items);
         }
-        
+
+        $PAGE->requires->yui_module('moodle-block_messageteacher-form', 
+                                    'M.block_messageteacher.form.init');
+
         return $this->content;
     }
 }
