@@ -6,7 +6,7 @@
             "io-form",
             "node",
             "json",
-            "overlay"
+            "moodle-core-notification"           
         ]
     }
 }

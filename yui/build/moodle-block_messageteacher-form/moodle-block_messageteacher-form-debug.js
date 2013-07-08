@@ -3,12 +3,12 @@ YUI.add('moodle-block_messageteacher-form', function (Y, NAME) {
 M.block_messageteacher = M.block_messageteacher || {};
 
 M.block_messageteacher.form = {
-    overlay: '',
+    overlay: null,
 
     init: function() {
         // Create an overlay (like the ones that Help buttons display) for
         // showing output from asynchronous call.
-        html = '<a id="block_messageteacher_output_header" href="#block_messageteacher">'
+        /*html = '<a id="block_messageteacher_output_header" href="#block_messageteacher">'
             +'<img src="'+M.util.image_url('t/delete', 'moodle')+'" /></a>';
         this.overlay_close = Y.Node.create(html);
         this.overlay = new Y.Overlay({
@@ -24,7 +24,7 @@ M.block_messageteacher.form = {
         this.overlay.render(Y.one(document.body));
         this.overlay_close.on('click', this.overlay.hide, this.overlay);
         Y.on("key", this.hide_response, this.overlay_close, "down:13", this);
-        this.overlay_close.on('click', this.hide_response, this);
+        this.overlay_close.on('click', this.hide_response, this);*/
 
         Y.all('.messageteacher_link').on('click', this.show_form, this);
     },
@@ -36,14 +36,24 @@ M.block_messageteacher.form = {
      */
     show_response: function(data) {
         // Create a node from the data
+        if (!this.overlay) {
+            this.overlay = new M.core.dialogue({
+                visible: false,
+                modal: true,
+                close: true,
+                draggable: false,
+                width: '50%',
+            });
+            this.overlay.render();
+        }
         this.overlay.set('bodyContent', Y.Node.create(data));
-        this.overlay.set("align", {
+ /*       this.overlay.set("align", {
             node: Y.one('.block_messageteacher'),
             points: [
                 Y.WidgetPositionAlign.TL,
                 Y.WidgetPositionAlign.RC
             ]
-        }); // Align the overlay with the submit button
+        }); // Align the overlay with the submit button*/
         this.overlay.show(); // Show the overlay
     },
 
@@ -105,4 +115,4 @@ M.block_messageteacher.form = {
 }
 
 
-}, '@VERSION@', {"requires": ["base", "io", "io-form", "node", "json", "overlay"]});
+}, '@VERSION@', {"requires": ["base", "io", "io-form", "node", "json", "moodle-core-notification"]});

@@ -81,6 +81,8 @@ if ($mform->is_cancelled()) {
         $endcode = $PAGE->requires->get_end_code();
         $script .= preg_replace('/<\/?(script|link)[^>]*>/', '', $endcode);
 
+        $output = html_writer::tag('div', $form, array('id' => 'messageteacher_form'));
+
         echo json_encode(array('state' => 0, 'output' => $output, 'script' => $script));
 
     } else {

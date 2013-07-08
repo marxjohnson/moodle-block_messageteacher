@@ -1,9 +1,17 @@
-#block_messageteacher_output {
-    width: 50% !important;
-    background-color: #F5F5F5;
-    border-radius: 4px;
-    border: 1px solid #E3E3E3;
+#messageteacher_form {
     padding: 2em;
+}
+
+#messageteacher_form .mform .fitem div.fitemtitle {
+    width: 8em;
+}
+
+#messageteacher_form .mform .fitem .felement {
+    margin-left: 10em;
+}
+
+#messageteacher_form textarea {
+    width: 80%;
 }
 
 .messageteacher_confirm {
