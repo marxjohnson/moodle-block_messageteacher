@@ -1,3 +1,11 @@
+New in 2.3
+* More tests
+* Custom messaging form
+* Option to include page URL in messages sent
+* User is sent back to the page they were on after sending a message
+* With Javascript enabled, messages can be sent without even leaving the page! 
+* Moodle 2.5 now required
+
 New in 2.2.2
 * Lots of tests
 * Fixed upgrade bug

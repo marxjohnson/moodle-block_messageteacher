@@ -10,6 +10,8 @@ This block was written by Mike Worth <mike@mike-worth.com> and Mark Johnson <mar
 It is Copyright Mark Johnson and Richard Taunton Sixth Form College. 
 It is currently maintained by Mark Johnson.
 
+Development of Version 2.3 was sponsored by Connecting Waters Charter School (http://connectingwaters.org/)
+
 Development of user image and group support sponsored by Proud Photography (http://www.ProudPhotography.com) – Online Photography School.
 
 Released Under the GNU General Public Licence http://www.gnu.org/copyleft/gpl.html
