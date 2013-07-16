@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Defines custom behat steps for messageteacher
+ *
+ * @package    block_messageteacher
+ * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright   2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
@@ -29,7 +52,7 @@ class behat_messageteacher extends behat_base {
      * @Given /^messageteacher has the following settings:$/
      */
     public function messageteacher_has_the_following_settings(TableNode $table) {
-        
+
         if (!$data = $table->getRowsHash()) {
             return;
         }
@@ -51,7 +74,7 @@ class behat_messageteacher extends behat_base {
         if (!$data = $table->getRowsHash()) {
             return;
         }
-        foreach ($data as $first=>$rest) {
+        foreach ($data as $first => $rest) {
             if ($first == 'user') {
                 continue;
             }

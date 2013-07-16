@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Displays and processes the messaging form
+ *
+ * @package    block_messageteacher
+ * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright   2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 require_once(__DIR__.'/../../config.php');
 
@@ -10,8 +33,8 @@ $recipientid = required_param('recipientid', PARAM_INT);
 $referurl = required_param('referurl', PARAM_URL);
 
 require_login();
-    
-@$ajax = $_SERVER['HTTP_X_REQUESTED_WITH'];   
+
+@$ajax = $_SERVER['HTTP_X_REQUESTED_WITH'];
 
 $url = '/blocks/messageteacher/message.php';
 $PAGE->set_url($url);
@@ -20,18 +43,18 @@ $PAGE->set_context(context_course::instance($courseid));
 $recipient = $DB->get_record('user', array('id' => $recipientid));
 
 $customdata = array(
-    'recipient' => $recipient, 
+    'recipient' => $recipient,
     'referurl' => $referurl,
     'courseid' => $courseid
 );
 $mform = new block_messageteacher_message_form(null, $customdata);
 
 if ($mform->is_cancelled()) {
-  // form cancelled, redirect
+    // Form cancelled, redirect.
     redirect($referurl);
     exit();
 } else if (($data = $mform->get_data())) {
-    try { 
+    try {
         $mform->process($data);
     } catch (messageteacher_no_recipient_exception $e) {
         if ($ajax) {
@@ -49,7 +72,7 @@ if ($mform->is_cancelled()) {
         }
     }
     if ($ajax) {
-        $output = html_writer::tag('p', 
+        $output = html_writer::tag('p',
                                     get_string('messagesent', 'block_messageteacher'),
                                     array('class' => 'messageteacher_confirm'));
         echo json_encode(array('state' => 1, 'output' => $output));
@@ -58,8 +81,8 @@ if ($mform->is_cancelled()) {
     }
     exit();
 } else {
-        
-    // form has not been submitted, just display it
+
+    // Form has not been submitted, just display it.
     if ($ajax) {
         ob_start();
         $mform->display();

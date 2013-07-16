@@ -34,13 +34,17 @@ class block_messageteacher extends block_base {
         $this->title = get_string('pluginname', 'block_messageteacher');
     }
 
+    public function applicable_formats() {
+          return array('all' => true, 'my' => false);
+    }
+
     /**
      * Gets a list of "teachers" with the defined role, and displays a link to message each
      *
      * @access public
      * @return void
      */
-    public function has_config(){
+    public function has_config() {
         return true;
     }
     public function get_content() {
@@ -87,7 +91,7 @@ class block_messageteacher extends block_base {
                             if (empty($usergroups)) {
                                 throw new Exception('nogroupmembership');
                             } else {
-                                foreach($usergroups as $usergroup) {
+                                foreach ($usergroups as $usergroup) {
                                     foreach ($teachers as $teacher) {
                                         if (groups_is_member($usergroup, $teacher->id)) {
                                             $groupteachers[$teacher->id] = $teacher;
@@ -111,8 +115,8 @@ class block_messageteacher extends block_base {
             $items = array();
             foreach ($teachers as $teacher) {
                 $urlparams = array (
-                    'courseid' => $COURSE->id, 
-                    'referurl' => $this->page->url->out(), 
+                    'courseid' => $COURSE->id,
+                    'referurl' => $this->page->url->out(),
                     'recipientid' => $teacher->id
                 );
                 $url = new moodle_url('/blocks/messageteacher/message.php', $urlparams);
@@ -130,7 +134,7 @@ class block_messageteacher extends block_base {
             $this->content->text = html_writer::alist($items);
         }
 
-        $PAGE->requires->yui_module('moodle-block_messageteacher-form', 
+        $PAGE->requires->yui_module('moodle-block_messageteacher-form',
                                     'M.block_messageteacher.form.init');
 
         return $this->content;

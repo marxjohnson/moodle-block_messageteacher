@@ -1,3 +1,12 @@
+/**
+ * Defines the javascript module for the messageteacher block
+ *
+ * @package    block_messageteacher
+ * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright   2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 M.block_messageteacher = M.block_messageteacher || {};
 
 M.block_messageteacher.form = {
@@ -23,7 +32,7 @@ M.block_messageteacher.form = {
                 modal: true,
                 close: true,
                 draggable: false,
-                width: '50%',
+                width: '50%'
             });
             this.overlay.render();
         }
@@ -63,14 +72,14 @@ M.block_messageteacher.form = {
                 failure: function(id, o) {
                     this.show_response(o.responseText);
                 }
-            }               
+            }
         });
     },
 
     submit_form: function(e) {
         e.preventDefault();
         var mform = document.getElementById('mform1');
-        
+
         this.xhr = Y.io(e.target.get('action'), {
             method: 'POST',
             context: this,
@@ -83,7 +92,7 @@ M.block_messageteacher.form = {
                 failure: function(id, o) {
                     M.block_messageteacher.form.show_response(o.responseText);
                 }
-            }               
+            }
         });
     }
 }

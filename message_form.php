@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Moodle form
+ * Defines the custom messaging form
  *
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @copyright
- * @package
- * @subpackage
- * @author 
+ * @package    block_messageteacher
+ * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright   2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -31,22 +29,22 @@ require_once($CFG->libdir . '/formslib.php');
 
 class block_messageteacher_message_form extends moodleform {
 
-    // Define the form
-    function definition() {
+    // Define the form.
+    public function definition() {
         global $USER, $CFG, $COURSE;
 
         $mform = $this->_form;
         $userid = $USER->id;
         $strrequired = get_string('required');
-    
-        $header = get_string('messageheader', 
-                             'block_messageteacher', 
+
+        $header = get_string('messageheader',
+                             'block_messageteacher',
                              fullname($this->_customdata['recipient']));
         $mform->addElement('header', 'general', $header);
 
-        $mform->addElement('textarea', 
-                            'message', 
-                            get_string('messagetext', 'block_messageteacher'), 
+        $mform->addElement('textarea',
+                            'message',
+                            get_string('messagetext', 'block_messageteacher'),
                             array('rows' => 6, 'cols' => 60));
         $mform->setType('message', PARAM_TEXT);
 

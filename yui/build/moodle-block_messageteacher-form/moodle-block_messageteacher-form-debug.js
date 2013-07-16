@@ -1,5 +1,14 @@
 YUI.add('moodle-block_messageteacher-form', function (Y, NAME) {
 
+/**
+ * Defines the javascript module for the messageteacher block
+ *
+ * @package    block_messageteacher
+ * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright   2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 M.block_messageteacher = M.block_messageteacher || {};
 
 M.block_messageteacher.form = {
@@ -8,23 +17,6 @@ M.block_messageteacher.form = {
     init: function() {
         // Create an overlay (like the ones that Help buttons display) for
         // showing output from asynchronous call.
-        /*html = '<a id="block_messageteacher_output_header" href="#block_messageteacher">'
-            +'<img src="'+M.util.image_url('t/delete', 'moodle')+'" /></a>';
-        this.overlay_close = Y.Node.create(html);
-        this.overlay = new Y.Overlay({
-            headerContent: this.overlay_close,
-            bodyContent: '',
-            id: 'block_messageteacher_output',
-            width:'400px',
-            visible : false,
-            centered: true,
-            contrain: true
-        });
-
-        this.overlay.render(Y.one(document.body));
-        this.overlay_close.on('click', this.overlay.hide, this.overlay);
-        Y.on("key", this.hide_response, this.overlay_close, "down:13", this);
-        this.overlay_close.on('click', this.hide_response, this);*/
 
         Y.all('.messageteacher_link').on('click', this.show_form, this);
     },
@@ -42,18 +34,11 @@ M.block_messageteacher.form = {
                 modal: true,
                 close: true,
                 draggable: false,
-                width: '50%',
+                width: '50%'
             });
             this.overlay.render();
         }
         this.overlay.set('bodyContent', Y.Node.create(data));
- /*       this.overlay.set("align", {
-            node: Y.one('.block_messageteacher'),
-            points: [
-                Y.WidgetPositionAlign.TL,
-                Y.WidgetPositionAlign.RC
-            ]
-        }); // Align the overlay with the submit button*/
         this.overlay.show(); // Show the overlay
     },
 
@@ -89,14 +74,14 @@ M.block_messageteacher.form = {
                 failure: function(id, o) {
                     this.show_response(o.responseText);
                 }
-            }               
+            }
         });
     },
 
     submit_form: function(e) {
         e.preventDefault();
         var mform = document.getElementById('mform1');
-        
+
         this.xhr = Y.io(e.target.get('action'), {
             method: 'POST',
             context: this,
@@ -109,7 +94,7 @@ M.block_messageteacher.form = {
                 failure: function(id, o) {
                     M.block_messageteacher.form.show_response(o.responseText);
                 }
-            }               
+            }
         });
     }
 }
