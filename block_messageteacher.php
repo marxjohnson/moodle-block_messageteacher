@@ -64,7 +64,7 @@ class block_messageteacher extends block_base {
         $roles = explode(',', get_config('block_messageteacher', 'roles'));
         list($usql, $uparams) = $DB->get_in_or_equal($roles);
         $params = array($COURSE->id, CONTEXT_COURSE);
-        $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email ';
+        $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
         $from = 'FROM {role_assignments} ra
             JOIN {context} AS c ON ra.contextid = c.id
             JOIN {user} AS u ON u.id = ra.userid ';
