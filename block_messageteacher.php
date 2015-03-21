@@ -61,81 +61,85 @@ class block_messageteacher extends block_base {
         $usegroups = get_config('block_messageteacher', 'groups');
         $coursehasgroups = groups_get_all_groups($COURSE->id);
 
-        $roles = explode(',', get_config('block_messageteacher', 'roles'));
-        list($usql, $uparams) = $DB->get_in_or_equal($roles);
-        $params = array($COURSE->id, CONTEXT_COURSE);
-        $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
-        $from = 'FROM {role_assignments} ra
-            JOIN {context} AS c ON ra.contextid = c.id
-            JOIN {user} AS u ON u.id = ra.userid ';
-        $where = 'WHERE ((c.instanceid = ? AND c.contextlevel = ?)';
-        if (get_config('block_messageteacher', 'includecoursecat')) {
-            $params = array_merge($params, array($COURSE->category, CONTEXT_COURSECAT));
-            $where .= ' OR (c.instanceid = ? AND c.contextlevel = ?))';
-        } else {
-            $where .= ')';
-        }
-        $params = array_merge($params, array($USER->id), $uparams);
-        $where .= 'AND userid != ? AND roleid '.$usql;
-        $order = ' ORDER BY u.firstname ASC, u.lastname';
+	if (get_config('block_messageteacher', 'roles')) {
+	    $roles = explode(',', get_config('block_messageteacher', 'roles'));
+	    list($usql, $uparams) = $DB->get_in_or_equal($roles);
+	    $params = array($COURSE->id, CONTEXT_COURSE);
+	    $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
+	    $from = 'FROM {role_assignments} ra
+		JOIN {context} AS c ON ra.contextid = c.id
+		JOIN {user} AS u ON u.id = ra.userid ';
+	    $where = 'WHERE ((c.instanceid = ? AND c.contextlevel = ?)';
+	    if (get_config('block_messageteacher', 'includecoursecat')) {
+		$params = array_merge($params, array($COURSE->category, CONTEXT_COURSECAT));
+		$where .= ' OR (c.instanceid = ? AND c.contextlevel = ?))';
+	    } else {
+		$where .= ')';
+	    }
+	    $params = array_merge($params, array($USER->id), $uparams);
+	    $where .= ' AND userid != ? AND roleid '.$usql;
+	    $order = ' ORDER BY u.firstname ASC, u.lastname';
 
-        if ($teachers = $DB->get_records_sql($select.$from.$where.$order, $params)) {
-            if ($usegroups && $coursehasgroups) {
-                try {
-                    $groupteachers = array();
-                    $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
-                    if (empty($usergroupings)) {
-                        throw new Exception('nogroupmembership');
-                    } else {
-                        foreach ($usergroupings as $usergroups) {
-                            if (empty($usergroups)) {
-                                throw new Exception('nogroupmembership');
-                            } else {
-                                foreach ($usergroups as $usergroup) {
-                                    foreach ($teachers as $teacher) {
-                                        if (groups_is_member($usergroup, $teacher->id)) {
-                                            $groupteachers[$teacher->id] = $teacher;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (empty($groupteachers)) {
-                            throw new Exception('nogroupteachers');
-                        } else {
-                            $teachers = $groupteachers;
-                        }
-                    }
-                } catch (Exception $e) {
-                    $this->content->text = get_string($e->getMessage(), 'block_messageteacher');
-                    return $this->content;
-                }
-            }
+	    if ($teachers = $DB->get_records_sql($select.$from.$where.$order, $params)) {
+		if ($usegroups && $coursehasgroups) {
+		    try {
+			$groupteachers = array();
+			$usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
+			if (empty($usergroupings)) {
+			    throw new Exception('nogroupmembership');
+			} else {
+			    foreach ($usergroupings as $usergroups) {
+				if (empty($usergroups)) {
+				    throw new Exception('nogroupmembership');
+				} else {
+				    foreach ($usergroups as $usergroup) {
+					foreach ($teachers as $teacher) {
+					    if (groups_is_member($usergroup, $teacher->id)) {
+						$groupteachers[$teacher->id] = $teacher;
+					    }
+					}
+				    }
+				}
+			    }
+			    if (empty($groupteachers)) {
+				throw new Exception('nogroupteachers');
+			    } else {
+				$teachers = $groupteachers;
+			    }
+			}
+		    } catch (Exception $e) {
+			$this->content->text = get_string($e->getMessage(), 'block_messageteacher');
+			return $this->content;
+		    }
+		}
 
-            $items = array();
-            foreach ($teachers as $teacher) {
-                $urlparams = array (
-                    'courseid' => $COURSE->id,
-                    'referurl' => $this->page->url->out(),
-                    'recipientid' => $teacher->id
-                );
-                $url = new moodle_url('/blocks/messageteacher/message.php', $urlparams);
-                $picture = '';
-                if (get_config('block_messageteacher', 'showuserpictures')) {
-                    $picture = new user_picture($teacher);
-                    $picture->link = false;
-                    $picture->size = 50;
-                    $picture = $OUTPUT->render($picture);
-                }
-                $name = html_writer::tag('span', fullname($teacher));
-                $attrs = array('href' => $url, 'class' => 'messageteacher_link');
-                $items[] = html_writer::tag('a', $picture.$name, $attrs);
-            }
-            $this->content->text = html_writer::alist($items);
-        }
+		$items = array();
+		foreach ($teachers as $teacher) {
+		    $urlparams = array (
+			'courseid' => $COURSE->id,
+			'referurl' => $this->page->url->out(),
+			'recipientid' => $teacher->id
+		    );
+		    $url = new moodle_url('/blocks/messageteacher/message.php', $urlparams);
+		    $picture = '';
+		    if (get_config('block_messageteacher', 'showuserpictures')) {
+			$picture = new user_picture($teacher);
+			$picture->link = false;
+			$picture->size = 50;
+			$picture = $OUTPUT->render($picture);
+		    }
+		    $name = html_writer::tag('span', fullname($teacher));
+		    $attrs = array('href' => $url, 'class' => 'messageteacher_link');
+		    $items[] = html_writer::tag('a', $picture.$name, $attrs);
+		}
+		$this->content->text = html_writer::alist($items);
+	    }
 
-        $PAGE->requires->yui_module('moodle-block_messageteacher-form',
-                                    'M.block_messageteacher.form.init');
+	    $PAGE->requires->yui_module('moodle-block_messageteacher-form',
+					'M.block_messageteacher.form.init');
+	} else {
+	    $this->content->text = "No teacher role defined";
+	}
 
         return $this->content;
     }
