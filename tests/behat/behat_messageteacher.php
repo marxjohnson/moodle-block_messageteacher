@@ -66,7 +66,7 @@ class behat_messageteacher extends behat_base {
      * Creates course category enrolments. A table with | user | category | role | is expected.
      * User is found by username, category by idnumber and role by shortname.
      *
-     * @Given /^the following category enrolments exists:$/
+     * @Given /^the following category enrolments exist:$/
      */
     public function the_following_category_enrolments_exists(TableNode $table) {
         global $DB;
