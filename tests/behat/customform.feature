@@ -63,4 +63,4 @@ Feature: Custom Form
         When I follow "Messages"
         And I follow "Test Student (1)"
         Then I should see "Test Message"
-	And I should see "/course/view.php?id="
+        And I should see "/course/view.php?id="
