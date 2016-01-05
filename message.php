@@ -23,6 +23,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+@$ajax = $_SERVER['HTTP_X_REQUESTED_WITH'];
+
+if ($ajax) {
+    define('AJAX_SCRIPT', true);
+}
+
 require_once(__DIR__.'/../../config.php');
 
 require_once($CFG->dirroot . '/blocks/messageteacher/exceptions.php');
@@ -32,13 +38,14 @@ $courseid = required_param('courseid', PARAM_INT);
 $recipientid = required_param('recipientid', PARAM_INT);
 $referurl = required_param('referurl', PARAM_URL);
 
-require_login();
+$coursecontext = context_course::instance($courseid);
+$PAGE->set_context($coursecontext);
 
-@$ajax = $_SERVER['HTTP_X_REQUESTED_WITH'];
+require_login();
+require_capability('moodle/site:sendmessage', $coursecontext);
 
 $url = '/blocks/messageteacher/message.php';
 $PAGE->set_url($url);
-$PAGE->set_context(context_course::instance($courseid));
 
 $recipient = $DB->get_record('user', array('id' => $recipientid));
 
