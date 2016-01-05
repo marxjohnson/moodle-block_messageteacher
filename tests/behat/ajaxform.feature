@@ -24,7 +24,7 @@ Feature: AJAX message form
 	And I press "Search"
 	And I set the field "Teacher" to "1"
 	And I press "Save changes"
-	And I am on homepage
+	And I follow "Site home"
 	And I follow "Course 1"
 	And I turn editing mode on
 	And I add the "Message My Teacher" block
@@ -61,7 +61,7 @@ Feature: AJAX message form
 	And I press "Close"
         And I log out
 	And I log in as "testteacher1"
-	And I navigate to "Messages" node in "My profile"
+	And I follow "Messages" in the user menu
         And I follow "Test Student (1)"
         Then I should see "Test Message"
 
@@ -79,8 +79,7 @@ Feature: AJAX message form
 	And I press "Close"
         And I log out
         And I log in as "testteacher1"
-	And I navigate to "Messages" node in "My profile"
+	And I follow "Messages" in the user menu
         And I follow "Test Student (1)"
         Then I should see "Test Message"
 	And I should see "/course/view.php?id="
-

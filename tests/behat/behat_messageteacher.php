@@ -38,6 +38,7 @@ class behat_messageteacher extends behat_base {
     public function there_is_an_instance_of_messageteacher_on($coursename) {
 
         return array(new Given('I log in as "admin"'),
+            new Given('I am on site homepage'),
             new Given('I follow "'.$coursename.'"'),
             new Given('I turn editing mode on'),
             new Given('I add the "Message My Teacher" block'),

@@ -1,4 +1,4 @@
-@block @block_messageteacher @block_messageteacher_customform 
+@block @block_messageteacher @block_messageteacher_customform
 Feature: Custom Form
     In order to send my teacher a message
     As a student
@@ -51,6 +51,8 @@ Feature: Custom Form
         Then I should see "Test Message"
 
     Scenario: Teacher recieves a message sent from the custom form and appendurl is enabled
+        Given the following config values are set as admin:
+            | appendurl | 1 | block_messageteacher |
         Given I follow "Test Teacher1"
         And I set the following fields to these values:
             | Message text | Test Message |
@@ -62,4 +64,3 @@ Feature: Custom Form
         And I follow "Test Student (1)"
         Then I should see "Test Message"
 	And I should see "/course/view.php?id="
-
