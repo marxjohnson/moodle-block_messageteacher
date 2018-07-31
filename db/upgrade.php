@@ -28,9 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 function xmldb_block_messageteacher_upgrade($oldversion=0) {
 
-    global $CFG, $THEME, $DB;
-
-    $dbman = $DB->get_manager();
+    global $CFG;
 
     $result = true;
 

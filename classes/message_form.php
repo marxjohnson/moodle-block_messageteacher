@@ -23,18 +23,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_messageteacher;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
-class block_messageteacher_message_form extends moodleform {
+class message_form extends \moodleform {
 
     // Define the form.
     public function definition() {
-        global $USER, $CFG, $COURSE;
-
         $mform = $this->_form;
-        $userid = $USER->id;
         $strrequired = get_string('required');
 
         $header = get_string('messageheader',
@@ -64,7 +63,7 @@ class block_messageteacher_message_form extends moodleform {
     }
 
     public function process($data) {
-        global $DB, $USER;
+        global $DB, $USER, $COURSE;
         if (!$recipient = $DB->get_record('user', array('id' => $data->recipientid))) {
             throw new no_recipient_excepion($data->recipientid);
         }
@@ -74,18 +73,19 @@ class block_messageteacher_message_form extends moodleform {
             $data->message .= "\n\n".get_string('sentfrom', 'block_messageteacher', $data->referurl);
         }
 
-        $eventdata = (object)array(
-            'component'         => 'block_messageteacher',
-            'name'              => 'message',
-            'userfrom'          => $USER,
-            'userto'            => $recipient,
-            'subject'           => get_string('messagefrom', 'block_messageteacher', fullname($USER)),
-            'fullmessage'       => $data->message,
-            'fullmessageformat' => FORMAT_PLAIN,
-            'fullmessagehtml'   => '',
-            'smallmessage'      => '',
-            'notification'      => 0
-        );
+        $eventdata = new \core\message\message();
+        $eventdata->component = 'block_messageteacher';
+        $eventdata->name = 'message';
+        $eventdata->userfrom = $USER;
+        $eventdata->userto = $recipient;
+        $eventdata->subject = get_string('messagefrom', 'block_messageteacher', fullname($USER));
+        $eventdata->fullmessage = $data->message;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml = '';
+        $eventdata->smallmessage = '';
+        $eventdata->notification = 0;
+        $eventdata->courseid = $COURSE->id;
+
         if (!message_send($eventdata)) {
             throw new message_failed_exception();
         }

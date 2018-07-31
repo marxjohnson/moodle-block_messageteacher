@@ -23,16 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-@$ajax = $_SERVER['HTTP_X_REQUESTED_WITH'];
+@$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
 
 if ($ajax) {
     define('AJAX_SCRIPT', true);
 }
 
 require_once(__DIR__.'/../../config.php');
-
-require_once($CFG->dirroot . '/blocks/messageteacher/exceptions.php');
-require_once($CFG->dirroot . '/blocks/messageteacher/message_form.php');
 
 $courseid = required_param('courseid', PARAM_INT);
 $recipientid = required_param('recipientid', PARAM_INT);
@@ -54,7 +51,7 @@ $customdata = array(
     'referurl' => $referurl,
     'courseid' => $courseid
 );
-$mform = new block_messageteacher_message_form(null, $customdata);
+$mform = new block_messageteacher\message_form(null, $customdata);
 
 if ($mform->is_cancelled()) {
     // Form cancelled, redirect.

@@ -1,3 +1,11 @@
+New in 2.4.1
+* Refactored form and exception code to classes
+* Updated behat tests for Moodle 3.3+ compatibility
+* Small bug fixes
+
+New in 2.4
+* Support for user images and groups
+
 New in 2.3
 * More tests
 * Custom messaging form

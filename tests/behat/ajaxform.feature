@@ -19,20 +19,13 @@ Feature: AJAX message form
             | user         | course  | role           | enrol  |
             | teststudent  | course1 | student        | manual |
             | testteacher1 | course1 | editingteacher | manual |
-        And I log in as "admin"
-        And I set the field "adminsearchquery" to "Teachers include"
-        And I press "Search"
-        And I set the field "Teacher" to "1"
-        And I press "Save changes"
-        And I follow "Site home"
-        And I follow "Course 1"
-        And I turn editing mode on
-        And I add the "Message My Teacher" block
-        And I log out
+        And messageteacher has the following settings:
+            | roles | 3 |
+        And there is an instance of messageteacher on "Course 1"
 
     Scenario: User accesses form
         Given I log in as "teststudent"
-        And I follow "Course 1"
+        And I am on "Course 1" course homepage
         When I follow "Test Teacher1"
         Then "Enter your message for Test Teacher1" "fieldset" should exist
         And "Message text" "field" should exist
@@ -40,7 +33,7 @@ Feature: AJAX message form
 
     Scenario: Student sends a message and returns to the page
         Given I log in as "teststudent"
-        And I follow "Course 1"
+        And I am on "Course 1" course homepage
         And I follow "Test Teacher1"
         And I set the following fields to these values:
             | Message text | Test Message |
@@ -53,7 +46,7 @@ Feature: AJAX message form
 
     Scenario: Teacher recieves a message sent from the custom form
         Given I log in as "teststudent"
-        When I follow "Course 1"
+        And I am on "Course 1" course homepage
         And I follow "Test Teacher1"
         And I set the following fields to these values:
             | Message text | Test Message |
@@ -62,8 +55,8 @@ Feature: AJAX message form
         And I log out
         And I log in as "testteacher1"
         And I follow "Messages" in the user menu
-        And I follow "Test Student (1)"
-        Then I should see "Test Message"
+        Then I should see "Test Student" in the "conversations-tab-panel" "region"
+        And I should see "Test Message"
 
     Scenario: Teacher recieves a message sent from the custom form and appendurl is enabled
         Given I log in as "admin"
@@ -71,7 +64,7 @@ Feature: AJAX message form
             | Append Referring URL | 1 |
         And I log out
         And I log in as "teststudent"
-        When I follow "Course 1"
+        And I am on "Course 1" course homepage
         And I follow "Test Teacher1"
         And I set the following fields to these values:
             | Message text | Test Message |
@@ -80,6 +73,6 @@ Feature: AJAX message form
         And I log out
         And I log in as "testteacher1"
         And I follow "Messages" in the user menu
-        And I follow "Test Student (1)"
-        Then I should see "Test Message"
+        Then I should see "Test Student" in the "conversations-tab-panel" "region"
+        And I should see "Test Message"
         And I should see "/course/view.php?id="

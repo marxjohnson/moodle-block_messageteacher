@@ -23,7 +23,7 @@ Feature: Custom Form
         And messageteacher has the following settings:
             | roles | 3 |
         And I log in as "teststudent"
-        And I follow "Course 1"
+        And I am on "Course 1" course homepage
 
     Scenario: User accesses form
         When I follow "Test Teacher1"
@@ -47,8 +47,8 @@ Feature: Custom Form
         And I log in as "testteacher1"
         And I expand "My profile" node
         When I follow "Messages"
-        And I follow "Test Student (1)"
-        Then I should see "Test Message"
+        Then I should see "Test Student" in the "conversations-tab-panel" "region"
+        And I should see "Test Message"
 
     Scenario: Teacher recieves a message sent from the custom form and appendurl is enabled
         Given the following config values are set as admin:
@@ -61,6 +61,6 @@ Feature: Custom Form
         And I log in as "testteacher1"
         And I expand "My profile" node
         When I follow "Messages"
-        And I follow "Test Student (1)"
-        Then I should see "Test Message"
+        Then I should see "Test Student" in the "conversations-tab-panel" "region"
+        And I should see "Test Message"
         And I should see "/course/view.php?id="

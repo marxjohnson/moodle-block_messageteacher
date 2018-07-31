@@ -15,23 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines the exceptions thrown by messageteacher
+ * Exception class indicating an invalid recipient
  *
  * @package    block_messageteacher
- * @author      Mark Johnson <mark@barrenfrozenwasteland.com>
- * @copyright   2013 Mark Johnson
+ * @copyright  2018 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class messageteacher_message_failed_exception extends moodle_exception {
+namespace block_messageteacher;
 
-    public function __construct() {
-        parent::__construct('messagefailed', 'block_messageteacher');
-    }
-}
+defined('MOODLE_INTERNAL') || die();
 
-class messageteacher_no_recipient_exception extends moodle_exception {
-
+class no_recipient_exception  extends \moodle_exception {
     public function __construct($recipientid) {
         parent::__construct('norecipient', 'block_messageteacher', $recipientid);
     }
