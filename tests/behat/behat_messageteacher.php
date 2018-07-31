@@ -29,11 +29,15 @@ use Behat\Behat\Context\Step\Given as Given;
 use Behat\Behat\Context\Step\When as When;
 use Behat\Gherkin\Node\TableNode as TableNode;
 
+/**
+ * Custom behat steps for messageteacher
+ */
 class behat_messageteacher extends behat_base {
     /**
      * Adds an instance of block_messageteacher to a given course.
      *
      * @Given /^there is an instance of messageteacher on "(?P<coursename_string>(?:[^"]|\\")*)"$/
+     * @params string $coursename The full name of the course.
      */
     public function there_is_an_instance_of_messageteacher_on($coursename) {
 
@@ -48,6 +52,8 @@ class behat_messageteacher extends behat_base {
      * Sets configuration for the block_messageteacher plugin. A table with | Setting name | value | is expected.
      *
      * @Given /^messageteacher has the following settings:$/
+     * @param TableNode $table The list of settings.
+     * @return void
      */
     public function messageteacher_has_the_following_settings(TableNode $table) {
 
@@ -65,6 +71,8 @@ class behat_messageteacher extends behat_base {
      * User is found by username, category by idnumber and role by shortname.
      *
      * @Given /^the following category enrolments exist:$/
+     * @param TableNode $table The list of category enrolments.
+     * @return bool;
      */
     public function the_following_category_enrolments_exists(TableNode $table) {
         global $DB;

@@ -26,6 +26,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Plugin upgrade steps
+ *
+ * @param int $oldversion
+ * @return bool
+ */
 function xmldb_block_messageteacher_upgrade($oldversion=0) {
 
     global $CFG;

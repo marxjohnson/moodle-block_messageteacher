@@ -104,7 +104,7 @@ if ($mform->is_cancelled()) {
         $headcode = $PAGE->requires->get_head_code($PAGE, $OUTPUT);
         $loadpos = strpos($headcode, 'M.yui.loader');
         $cfgpos = strpos($headcode, 'M.cfg');
-        $script .= substr($headcode, $loadpos, $cfgpos-$loadpos);
+        $script .= substr($headcode, $loadpos, $cfgpos - $loadpos);
         $endcode = $PAGE->requires->get_end_code();
         $script .= preg_replace('/<\/?(script|link)[^>]*>/', '', $endcode);
 

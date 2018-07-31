@@ -29,9 +29,14 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
+/**
+ * Custom messaging form.
+ */
 class message_form extends \moodleform {
 
-    // Define the form.
+    /**
+     * Define the form.
+     */
     public function definition() {
         $mform = $this->_form;
         $strrequired = get_string('required');
@@ -62,10 +67,16 @@ class message_form extends \moodleform {
 
     }
 
+    /**
+     * Validate and send the message.
+     *
+     * @param stdClass $data Form data
+     * @return true
+     */
     public function process($data) {
         global $DB, $USER, $COURSE;
         if (!$recipient = $DB->get_record('user', array('id' => $data->recipientid))) {
-            throw new no_recipient_excepion($data->recipientid);
+            throw new no_recipient_exception($data->recipientid);
         }
 
         $appendurl = get_config('block_messageteacher', 'appendurl');

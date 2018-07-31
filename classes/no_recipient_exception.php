@@ -26,7 +26,16 @@ namespace block_messageteacher;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Exception thrown when a recipient is invalid.
+ */
 class no_recipient_exception  extends \moodle_exception {
+
+    /**
+     * Set the exception message with the invalid recipient ID.
+     *
+     * @param int $recipientid
+     */
     public function __construct($recipientid) {
         parent::__construct('norecipient', 'block_messageteacher', $recipientid);
     }

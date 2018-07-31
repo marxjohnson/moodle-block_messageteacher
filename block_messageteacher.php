@@ -30,25 +30,37 @@ defined('MOODLE_INTERNAL') || die();
  *  Class definition for the Message My Teacher block
  */
 class block_messageteacher extends block_base {
+
+    /**
+     * Initialise the block title.
+     */
     public function init() {
         $this->title = get_string('pluginname', 'block_messageteacher');
     }
 
+    /**
+     * Set applicable formats, any page except My Moodle.
+     */
     public function applicable_formats() {
           return array('all' => true, 'my' => false);
+    }
+
+    /*
+     * Enable block config.
+     *
+     * @return true
+     */
+    public function has_config() {
+        return true;
     }
 
     /**
      * Gets a list of "teachers" with the defined role, and displays a link to message each
      *
-     * @access public
-     * @return void
+     * @return stdClass
      */
-    public function has_config() {
-        return true;
-    }
     public function get_content() {
-        global $COURSE, $CFG, $USER, $DB, $OUTPUT, $PAGE;
+        global $COURSE, $USER, $DB, $OUTPUT, $PAGE;
 
         if ($this->content !== null) {
             return $this->content;
@@ -65,10 +77,11 @@ class block_messageteacher extends block_base {
 	    $roles = explode(',', get_config('block_messageteacher', 'roles'));
 	    list($usql, $uparams) = $DB->get_in_or_equal($roles);
 	    $params = array($COURSE->id, CONTEXT_COURSE);
-	    $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
+	    $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic,
+	            u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
 	    $from = 'FROM {role_assignments} ra
-		JOIN {context} AS c ON ra.contextid = c.id
-		JOIN {user} AS u ON u.id = ra.userid ';
+		JOIN {context} c ON ra.contextid = c.id
+		JOIN {user} u ON u.id = ra.userid ';
 	    $where = 'WHERE ((c.instanceid = ? AND c.contextlevel = ?)';
 	    if (get_config('block_messageteacher', 'includecoursecat')) {
 		$params = array_merge($params, array($COURSE->category, CONTEXT_COURSECAT));

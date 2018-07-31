@@ -26,7 +26,14 @@ namespace block_messageteacher;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Exception thrown when a message fails to send.
+ */
 class message_failed_exception extends \moodle_exception {
+
+    /**
+     * Set exception message.
+     */
     public function __construct() {
         parent::__construct('messagefailed', 'block_messageteacher');
     }
