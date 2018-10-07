@@ -14,19 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * Defines metadata for the Message My Teacher block
+ * Exception class indication a message failed to send.
  *
  * @package    block_messageteacher
- * @author     Mark Johnson <mark.johnson@tauntons.ac.uk>
- * @copyright  2010 onwards Tauntons College, UK
+ * @copyright  2018 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace block_messageteacher;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2018073100;
-$plugin->requires = 2017051507;
-$plugin->component = 'block_messageteacher';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.4.1';
+/**
+ * Exception thrown when a message fails to send.
+ */
+class message_failed_exception extends \moodle_exception {
+
+    /**
+     * Set exception message.
+     */
+    public function __construct() {
+        parent::__construct('messagefailed', 'block_messageteacher');
+    }
+}

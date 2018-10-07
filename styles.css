@@ -1,14 +1,21 @@
-.block_messageteacher ul {
-    list-style:none;
-    margin: 0;
+#messageteacher_form {
+    padding: 2em;
 }
 
-.block_messageteacher li a span {
-    vertical-align: top;
+#messageteacher_form .mform .fitem div.fitemtitle {
+    width: 8em;
 }
 
+#messageteacher_form .mform .fitem .felement {
+    margin-left: 10em;
+}
 
-.block.block_messageteacher .content .userpicture {
-    height: 50px;
-    width: 50px;
+#messageteacher_form textarea {
+    width: 80%;
+}
+
+.messageteacher_confirm {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 1em;
 }
