@@ -19,8 +19,8 @@
  * Defines the lang strings for the Message My Teacher block
  *
  * @package    block_messageteacher
- * @author     Mark Johnson <mark.johnson@tauntons.ac.uk>
- * @copyright  2010 onwards Tauntons College, UK
+ * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright  2010-2012 Tauntons College, UK. 2012 onwards Mark Johnson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();

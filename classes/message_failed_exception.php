@@ -18,7 +18,7 @@
  * Exception class indication a message failed to send.
  *
  * @package    block_messageteacher
- * @copyright  2018 The Open University
+ * @copyright  2018 Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,6 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Exception thrown when a message fails to send.
+ *
+ * @copyright  2018 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class message_failed_exception extends \moodle_exception {
 

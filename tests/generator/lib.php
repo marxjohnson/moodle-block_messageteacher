@@ -15,30 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Exception class indicating an invalid recipient
+ * block_messageteacher data generator
  *
  * @package    block_messageteacher
- * @copyright  2018 Mark Johnson
+ * @category   test
+ * @copyright  2019 Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-namespace block_messageteacher;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Exception thrown when a recipient is invalid.
- * @copyright  2018 Mark Johnson
+ * Message teacher block data generator class
+ *
+ * @copyright  2019 Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class no_recipient_exception  extends \moodle_exception {
-
-    /**
-     * Set the exception message with the invalid recipient ID.
-     *
-     * @param int $recipientid
-     */
-    public function __construct($recipientid) {
-        parent::__construct('norecipient', 'block_messageteacher', $recipientid);
-    }
+class block_messageteacher_generator extends testing_block_generator {
 }

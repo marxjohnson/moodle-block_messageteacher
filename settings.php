@@ -20,8 +20,8 @@
  * Allows selection of roles to be considered "Teachers", and thus displayed in the block
  *
  * @package    block_messageteacher
- * @author     Mark Johnson <mark.johnson@tauntons.ac.uk>
- * @copyright  2010 onwards Tauntons College, UK
+ * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright  2010-2012 Tauntons College, UK. 2012 onwards Mark Johnson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -19,14 +19,14 @@
  * Defines metadata for the Message My Teacher block
  *
  * @package    block_messageteacher
- * @author     Mark Johnson <mark.johnson@tauntons.ac.uk>
- * @copyright  2010 onwards Tauntons College, UK
+ * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
+ * @copyright  2010-2012 Tauntons College, UK. 2012 onwards Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2018073100;
-$plugin->requires = 2017051507;
+$plugin->version = 2019091600;
+$plugin->requires = 2019052000;
 $plugin->component = 'block_messageteacher';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '2.4.1';
+$plugin->release = '2.5';

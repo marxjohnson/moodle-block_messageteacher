@@ -31,6 +31,9 @@ require_once($CFG->libdir . '/formslib.php');
 
 /**
  * Custom messaging form.
+ *
+ * @copyright  2013 Mark Johnson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class message_form extends \moodleform {
 
@@ -39,6 +42,7 @@ class message_form extends \moodleform {
      */
     public function definition() {
         $mform = $this->_form;
+        $mform->disable_form_change_checker();
         $strrequired = get_string('required');
 
         $header = get_string('messageheader',
@@ -63,7 +67,9 @@ class message_form extends \moodleform {
         $mform->addElement('hidden', 'courseid', $this->_customdata['courseid']);
         $mform->setType('courseid', PARAM_INT);
 
-        $mform->addElement('submit', 'send', get_string('send', 'block_messageteacher'));
+        if (empty($this->_customdata['modal'])) {
+            $mform->addElement('submit', 'send', get_string('send', 'block_messageteacher'));
+        }
 
     }
 
@@ -85,8 +91,8 @@ class message_form extends \moodleform {
         }
 
         $eventdata = new \core\message\message();
-        $eventdata->component = 'block_messageteacher';
-        $eventdata->name = 'message';
+        $eventdata->component = 'moodle';
+        $eventdata->name = 'instantmessage';
         $eventdata->userfrom = $USER;
         $eventdata->userto = $recipient;
         $eventdata->subject = get_string('messagefrom', 'block_messageteacher', fullname($USER));
