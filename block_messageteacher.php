@@ -161,7 +161,6 @@ class block_messageteacher extends block_base {
             }
 
             $PAGE->requires->js_call_amd('block_messageteacher/form', 'init');
-            $PAGE->requires->strings_for_js(['send', 'messagesent', 'pluginname'], 'block_messageteacher');
         } else {
             $this->content->text = "No teacher role defined";
         }

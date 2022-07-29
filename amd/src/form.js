@@ -1,6 +1,6 @@
 
-define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events'],
-        function(Fragment, Ajax, ModalFactory, ModalEvents) {
+define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events', 'core/str'],
+        function(Fragment, Ajax, ModalFactory, ModalEvents, Str) {
 
     var t = {
         modal: null,
@@ -16,22 +16,25 @@ define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events']
          *
          * Create a Save/Cancel modal to display the form, and a Cancel modal for confirmation/error messages.
          */
-        init: function() {
+        init: async function() {
+
+            const title = await Str.get_string('pluginname', 'block_messageteacher');
+            const send = await Str.get_string('send', 'block_messageteacher');
 
             ModalFactory.create({
                 type: ModalFactory.types.DEFAULT,
-                title: M.util.get_string('pluginname', 'block_messageteacher')
+                title: title
             }).then(function(modal) {
                 t.responseModal = modal;
             });
 
             ModalFactory.create({
                 type: ModalFactory.types.SAVE_CANCEL,
-                title: M.util.get_string('pluginname', 'block_messageteacher')
+                title: title
             }).then(function(modal) {
                 t.modal = modal;
                 t.modal.setLarge();
-                t.modal.setSaveButtonText(M.util.get_string('send', 'block_messageteacher'));
+                t.modal.setSaveButtonText(send);
 
                 t.modal.getRoot().on(ModalEvents.hidden, function() {
                     t.modal.setBody('');
@@ -103,12 +106,13 @@ define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events']
                         }
                     ]
                 },
-                done: function(response) {
+                done: async function(response) {
                     t.modal.hide();
                     if (response.msgid === -1) {
                         t.responseModal.setBody(response.errormessage);
                     } else {
-                        t.responseModal.setBody(M.util.get_string('messagesent', 'block_messageteacher'));
+                        const sent = await Str.get_string('messagesent', 'block_messageteacher');
+                        t.responseModal.setBody(sent);
                     }
                     t.responseModal.show();
                     M.util.js_complete('block_messageteacher_send');
