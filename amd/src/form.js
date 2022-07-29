@@ -21,43 +21,39 @@ define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events',
             const title = await Str.get_string('pluginname', 'block_messageteacher');
             const send = await Str.get_string('send', 'block_messageteacher');
 
-            ModalFactory.create({
+            t.responseModal = await ModalFactory.create({
                 type: ModalFactory.types.DEFAULT,
                 title: title
-            }).then(function(modal) {
-                t.responseModal = modal;
             });
 
-            ModalFactory.create({
+            t.modal = await ModalFactory.create({
                 type: ModalFactory.types.SAVE_CANCEL,
                 title: title
-            }).then(function(modal) {
-                t.modal = modal;
-                t.modal.setLarge();
-                t.modal.setSaveButtonText(send);
-
-                t.modal.getRoot().on(ModalEvents.hidden, function() {
-                    t.modal.setBody('');
-                }.bind(this));
-
-                // We catch the modal save event, and use it to submit the form inside the modal.
-                // Triggering a form submission will give JS validation scripts a chance to check for errors.
-                t.modal.getRoot().on(ModalEvents.save, function(e) {
-                    e.preventDefault();
-                    t.modal.getRoot().find('form').submit();
-                });
-                // We also catch the form submit event and use it to submit the form with ajax.
-                t.modal.getRoot().on('submit', 'form', t.submitForm);
-
-                var links = document.querySelectorAll('.messageteacher_link');
-                for (var i = 0; i < links.length; i++) {
-                    if (t.contextid === null) {
-                        t.contextid = links[i].parentElement.parentElement.dataset.contextid;
-                        t.appendurl = links[i].parentElement.parentElement.dataset.appendurl;
-                    }
-                    links[i].addEventListener('click', t.showForm);
-                }
             });
+            t.modal.setLarge();
+            t.modal.setSaveButtonText(send);
+
+            t.modal.getRoot().on(ModalEvents.hidden, function() {
+                t.modal.setBody('');
+            }.bind(this));
+
+            // We catch the modal save event, and use it to submit the form inside the modal.
+            // Triggering a form submission will give JS validation scripts a chance to check for errors.
+            t.modal.getRoot().on(ModalEvents.save, function(e) {
+                e.preventDefault();
+                t.modal.getRoot().find('form').submit();
+            });
+            // We also catch the form submit event and use it to submit the form with ajax.
+            t.modal.getRoot().on('submit', 'form', t.submitForm);
+
+            var links = document.querySelectorAll('.messageteacher_link');
+            for (var i = 0; i < links.length; i++) {
+                if (t.contextid === null) {
+                    t.contextid = links[i].parentElement.parentElement.dataset.contextid;
+                    t.appendurl = links[i].parentElement.parentElement.dataset.appendurl;
+                }
+                links[i].addEventListener('click', t.showForm);
+            }
         },
 
         /**
@@ -86,7 +82,7 @@ define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events',
          *
          * @param {Event} e
          */
-        submitForm: function(e) {
+        submitForm: async function(e) {
             e.preventDefault();
             var recipientid = t.modal.getRoot().find('[name=recipientid]').val();
             var message = t.modal.getRoot().find('[name=message]').val();
@@ -96,34 +92,34 @@ define(['core/fragment', 'core/ajax', 'core/modal_factory', 'core/modal_events',
 
             M.util.js_pending('block_messageteacher_send');
 
-            Ajax.call([{
-                methodname: 'core_message_send_instant_messages',
-                args: {
-                    'messages': [
-                        {
-                            'touserid': recipientid,
-                            'text': message
-                        }
-                    ]
-                },
-                done: async function(response) {
-                    t.modal.hide();
-                    if (response.msgid === -1) {
-                        t.responseModal.setBody(response.errormessage);
-                    } else {
-                        const sent = await Str.get_string('messagesent', 'block_messageteacher');
-                        t.responseModal.setBody(sent);
+            try {
+                const response = await Ajax.call([{
+                    methodname: 'core_message_send_instant_messages',
+                    args: {
+                        'messages': [
+                            {
+                                'touserid': recipientid,
+                                'text': message
+                            }
+                        ]
                     }
-                    t.responseModal.show();
-                    M.util.js_complete('block_messageteacher_send');
-                },
-                fail: function(ex) {
-                    t.modal.hide();
-                    t.responseModal.setBody(ex.message);
-                    t.responseModal.show();
-                    M.util.js_complete('block_messageteacher_send');
+                }])[0];
+
+                t.modal.hide();
+                if (response.msgid === -1) {
+                    t.responseModal.setBody(response.errormessage);
+                } else {
+                    const sent = await Str.get_string('messagesent', 'block_messageteacher');
+                    t.responseModal.setBody(sent);
                 }
-            }]);
+                t.responseModal.show();
+                M.util.js_complete('block_messageteacher_send');
+            } catch (ex) {
+                t.modal.hide();
+                t.responseModal.setBody(ex.message);
+                t.responseModal.show();
+                M.util.js_complete('block_messageteacher_send');
+            }
         }
     };
 
