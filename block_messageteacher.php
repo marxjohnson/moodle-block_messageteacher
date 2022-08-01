@@ -156,7 +156,8 @@ class block_messageteacher extends block_base {
                 }
                 $this->content->text = html_writer::alist($items, [
                     'data-contextid' => $this->context->id,
-                    'data-appendurl' => get_config('block_messageteacher', 'appendurl')
+                    'data-appendurl' => get_config('block_messageteacher', 'appendurl'),
+                    'data-referurl' => $this->page->url->out(),
                 ]);
             }
 

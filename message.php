@@ -40,12 +40,14 @@ $PAGE->set_url($url);
 
 $recipient = $DB->get_record('user', array('id' => $recipientid));
 
-$customdata = array(
-    'recipient' => $recipient,
+$defaultdata = array(
+    'recipientid' => $recipient->id,
+    'reciepientname' => fullname($recipient),
     'referurl' => $referurl,
     'courseid' => $courseid
 );
-$mform = new block_messageteacher\message_form(null, $customdata);
+$mform = new block_messageteacher\message_form();
+$mform->set_data($defaultdata);
 
 if ($mform->is_cancelled()) {
     // Form cancelled, redirect.
