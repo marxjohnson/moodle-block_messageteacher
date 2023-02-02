@@ -49,3 +49,4 @@ $string['showuserpictures'] = 'Show User Pictures';
 $string['showuserpicturesdesc'] = 'If enabled, teachers\' pictures will show alongside their name';
 $string['teachersinclude']         = 'Teachers include:';
 $string['rolesdesc']         = 'Select all the roles which are teachers or people whom students may wish to ask for help';
+$string['privacy:metadata'] = 'This plugin does not store personal data.';
