@@ -30,3 +30,4 @@ $plugin->requires = 2021051700; // Moodle 3.11
 $plugin->component = 'block_messageteacher';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '2.6.1';
+$plugin->supported = [400, 405];
