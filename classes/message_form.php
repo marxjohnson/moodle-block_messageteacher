@@ -40,6 +40,7 @@ require_once($CFG->libdir . '/formslib.php');
  */
 class message_form extends \core_form\dynamic_form {
 
+    #[\Override]
     protected function get_context_for_dynamic_submission(): context {
         if ($contextid = $this->optional_param('contextid', null, PARAM_INT)) {
             return \context::instance_by_id($contextid, MUST_EXIST);
@@ -49,31 +50,33 @@ class message_form extends \core_form\dynamic_form {
         }
     }
 
+    #[\Override]
     public function set_data_for_dynamic_submission(): void {
         global $DB;
 
         $this->set_data([
             'recipientid' => $this->optional_param('recipientid', null, PARAM_INT),
             'referurl' => $this->optional_param('referurl', null, PARAM_URL),
-            'courseid' => $this->optional_param('courseid', null, PARAM_INT)
+            'courseid' => $this->optional_param('courseid', null, PARAM_INT),
         ]);
     }
 
+    #[\Override]
     protected function check_access_for_dynamic_submission(): void {
         require_capability('moodle/site:sendmessage', $this->get_context_for_dynamic_submission());
     }
 
+    #[\Override]
     protected function get_page_url_for_dynamic_submission(): moodle_url {
         return new moodle_url($this->optional_param('referurl', null, PARAM_URL));
     }
 
+    #[\Override]
     public function process_dynamic_submission() {
         return $this->process($this->get_data());
     }
 
-    /**
-     * Define the form.
-     */
+    #[\Override]
     public function definition() {
         $mform = $this->_form;
         $mform->disable_form_change_checker();
@@ -82,7 +85,7 @@ class message_form extends \core_form\dynamic_form {
         $mform->addElement('textarea',
                             'message',
                             get_string('messagetext', 'block_messageteacher'),
-                            array('rows' => 6, 'cols' => 60));
+                            ['rows' => 6, 'cols' => 60]);
         $mform->setType('message', PARAM_TEXT);
 
         $mform->addRule('message', $strrequired, 'required', null, 'client');
@@ -102,6 +105,7 @@ class message_form extends \core_form\dynamic_form {
 
     }
 
+    #[\Override]
     public function definition_after_data() {
         global $DB;
         $mform = $this->_form;
@@ -121,7 +125,7 @@ class message_form extends \core_form\dynamic_form {
      */
     public function process($data) {
         global $DB, $USER, $COURSE;
-        if (!$recipient = $DB->get_record('user', array('id' => $data->recipientid))) {
+        if (!$recipient = $DB->get_record('user', ['id' => $data->recipientid])) {
             throw new no_recipient_exception($data->recipientid);
         }
 

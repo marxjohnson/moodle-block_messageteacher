@@ -23,8 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Output fragment for modal message form.
  *
@@ -36,21 +34,21 @@ defined('MOODLE_INTERNAL') || die();
  * @throws require_login_exception
  * @throws required_capability_exception
  */
-function block_messageteacher_output_fragment_message_form($args) : string {
+function block_messageteacher_output_fragment_message_form($args): string {
     global $DB;
     $coursecontext = context_course::instance($args['courseid']);
 
     require_login();
     require_capability('moodle/site:sendmessage', $coursecontext);
 
-    $recipient = $DB->get_record('user', array('id' => $args['recipientid']));
+    $recipient = $DB->get_record('user', ['id' => $args['recipientid']]);
 
-    $customdata = array(
+    $customdata = [
         'recipient' => $recipient,
         'referurl' => $args['referurl'],
         'courseid' => $args['courseid'],
         'modal' => true,
-    );
+    ];
     $mform = new block_messageteacher\message_form(null, $customdata);
     ob_start();
     $mform->display();

@@ -14,17 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Block Message Teacher Privacy provider
- *
- * @package    block_messageteacher
- * @copyright  2023 Peter Sistrom <petersistrom@catalyst-au.net>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_messageteacher\privacy;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Privacy Subsystem implementing null_provider.
@@ -33,8 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2023 Peter Sistrom <petersistrom@catalyst-au.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class provider implements \core_privacy\local\metadata\null_provider
-{
+class provider implements \core_privacy\local\metadata\null_provider {
 
     /**
      * Get the language string identifier with the component's language
@@ -42,8 +31,7 @@ class provider implements \core_privacy\local\metadata\null_provider
      *
      * @return string
      */
-    public static function get_reason(): string
-    {
+    public static function get_reason(): string {
         return 'privacy:metadata';
     }
 }

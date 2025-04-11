@@ -38,14 +38,14 @@ require_capability('moodle/site:sendmessage', $coursecontext);
 $url = '/blocks/messageteacher/message.php';
 $PAGE->set_url($url);
 
-$recipient = $DB->get_record('user', array('id' => $recipientid));
+$recipient = $DB->get_record('user', ['id' => $recipientid]);
 
-$defaultdata = array(
+$defaultdata = [
     'recipientid' => $recipient->id,
     'reciepientname' => fullname($recipient),
     'referurl' => $referurl,
-    'courseid' => $courseid
-);
+    'courseid' => $courseid,
+];
 $mform = new block_messageteacher\message_form();
 $mform->set_data($defaultdata);
 

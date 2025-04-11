@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Version upgrade scripts for the message teacher block
  *
@@ -22,13 +21,6 @@
  * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
  * @copyright  2012 onwards Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
-/**
- * Plugin upgrade steps
- *
  * @param int $oldversion
  * @return bool
  */
@@ -36,15 +28,13 @@ function xmldb_block_messageteacher_upgrade($oldversion=0) {
 
     global $CFG;
 
-    $result = true;
-
     // And upgrade begins here. For each one, you'll need one
     // block of code similar to the next one. Please, delete
     // this comment lines once this file start handling proper
     // upgrade code.
 
-    if ($result && $oldversion < 2012121501) {
-        $config = array('roles', 'groups', 'showuserpictures');
+    if ($oldversion < 2012121501) {
+        $config = ['roles', 'groups', 'showuserpictures'];
         foreach ($config as $name) {
             if ($value = $CFG->{'block_messageteacher_'.$name}) {
                 set_config($name, $value, 'block_messageteacher');
@@ -54,5 +44,5 @@ function xmldb_block_messageteacher_upgrade($oldversion=0) {
         upgrade_block_savepoint(true, 2012121501, 'messageteacher');
     }
 
-    return $result;
+    return true;
 }

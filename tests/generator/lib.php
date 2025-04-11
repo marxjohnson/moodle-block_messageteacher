@@ -15,21 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * block_messageteacher data generator
- *
- * @package    block_messageteacher
- * @category   test
- * @copyright  2019 Mark Johnson
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
-/**
  * Message teacher block data generator class
  *
  * @copyright  2019 Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_messageteacher
  */
 class block_messageteacher_generator extends testing_block_generator {
 }

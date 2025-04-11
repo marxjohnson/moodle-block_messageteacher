@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 //
+
 /**
  * Defines global settings for the Message My Teacher block
  *
@@ -30,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 $settings->add(new admin_setting_pickroles('block_messageteacher/roles',
                                            get_string('teachersinclude', 'block_messageteacher'),
                                            get_string('rolesdesc', 'block_messageteacher'),
-                                           array('moodle/legacy:teacher'),
+                                           ['moodle/legacy:teacher'],
                                            PARAM_TEXT));
 
 $settings->add(new admin_setting_configcheckbox('block_messageteacher/groups',

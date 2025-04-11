@@ -14,21 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace block_messageteacher;
+
 /**
  * Exception class indication a message failed to send.
  *
  * @package    block_messageteacher
- * @copyright  2018 Mark Johnson
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-namespace block_messageteacher;
-
-defined('MOODLE_INTERNAL') || die();
-
-/**
- * Exception thrown when a message fails to send.
- *
  * @copyright  2018 Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

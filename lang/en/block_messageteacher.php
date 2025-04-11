@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Defines the lang strings for the Message My Teacher block
  *
@@ -31,22 +30,22 @@ $string['enablegroups'] = 'Enable Group Support';
 $string['groupsdesc'] = 'When enabled, students will only see teachers in the same group as them';
 $string['includecoursecat'] = 'Include teachers from Course Category';
 $string['includecoursecatdesc'] = 'When enabled, users with the teacher roles in the course\'s parent category will be displayed, as well as those assigned in the course itself';
-$string['messageteacher:addinstance'] = 'Add a new Message My Teacher block';
-$string['messageprovider:message'] = 'A message sent using the Message My Teacher block';
+$string['messagefailed'] = 'Message sending failed';
 $string['messagefrom'] = 'Message From {$a}';
 $string['messageheader'] = 'Enter your message for {$a}';
-$string['messagefailed'] = 'Message sending failed';
+$string['messageprovider:message'] = 'A message sent using the Message My Teacher block';
 $string['messagesent'] = 'Message Sent!';
+$string['messageteacher:addinstance'] = 'Add a new Message My Teacher block';
 $string['messagetext'] = 'Message text';
 $string['nogroupmembership'] = 'You\'re not a member of any group';
 $string['nogroupteachers'] = 'Teacher not yet assigned to your group';
 $string['norecipient'] = 'No recipient could be determined for userid {$a}';
 $string['pluginname'] = 'Message My Teacher';
 $string['pluginnameplural'] = 'Message My Teachers';
+$string['privacy:metadata'] = 'This plugin does not store personal data.';
+$string['rolesdesc']         = 'Select all the roles which are teachers or people whom students may wish to ask for help';
 $string['send'] = 'Send';
 $string['sentfrom'] = 'This message was sent from {$a}';
 $string['showuserpictures'] = 'Show User Pictures';
 $string['showuserpicturesdesc'] = 'If enabled, teachers\' pictures will show alongside their name';
 $string['teachersinclude']         = 'Teachers include:';
-$string['rolesdesc']         = 'Select all the roles which are teachers or people whom students may wish to ask for help';
-$string['privacy:metadata'] = 'This plugin does not store personal data.';

@@ -14,21 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
-/**
- * Defines the class for the Message My Teacher block
- *
- * @package    block_messageteacher
- * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
- * @copyright  2010-2012 Tauntons College, UK. 2012 Onwards Mark Johnson
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class definition for the Message My Teacher block
  *
+ * @package    block_messageteacher
+ * @author     Mark Johnson <mark@barrenfrozenwasteland.com>
  * @copyright  2010-2012 Tauntons College, UK. 2012 Onwards Mark Johnson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -45,7 +35,7 @@ class block_messageteacher extends block_base {
      * Set applicable formats, any page except My Moodle.
      */
     public function applicable_formats() {
-          return array('all' => true, 'my' => false);
+          return ['all' => true, 'my' => false];
     }
 
     /**
@@ -63,7 +53,7 @@ class block_messageteacher extends block_base {
      * @return stdClass
      */
     public function get_content() {
-        global $COURSE, $USER, $DB, $OUTPUT, $PAGE;
+        global $COURSE, $USER, $DB, $OUTPUT;
 
         if ($this->content !== null) {
             return $this->content;
@@ -79,7 +69,7 @@ class block_messageteacher extends block_base {
         if (get_config('block_messageteacher', 'roles')) {
             $roles = explode(',', get_config('block_messageteacher', 'roles'));
             list($usql, $uparams) = $DB->get_in_or_equal($roles);
-            $params = array($COURSE->id, CONTEXT_COURSE);
+            $params = [$COURSE->id, CONTEXT_COURSE];
             $select = 'SELECT DISTINCT u.id, u.firstname, u.lastname, u.firstnamephonetic,
                     u.lastnamephonetic, u.middlename, u.alternatename, u.picture, u.imagealt, u.email ';
             $from = 'FROM {role_assignments} ra
@@ -87,19 +77,19 @@ class block_messageteacher extends block_base {
                     JOIN {user} u ON u.id = ra.userid ';
             $where = 'WHERE ((c.instanceid = ? AND c.contextlevel = ?)';
             if (get_config('block_messageteacher', 'includecoursecat')) {
-                $params = array_merge($params, array($COURSE->category, CONTEXT_COURSECAT));
+                $params = array_merge($params, [$COURSE->category, CONTEXT_COURSECAT]);
                 $where .= ' OR (c.instanceid = ? AND c.contextlevel = ?))';
             } else {
                 $where .= ')';
             }
-            $params = array_merge($params, array($USER->id), $uparams);
+            $params = array_merge($params, [$USER->id], $uparams);
             $where .= ' AND userid != ? AND roleid '.$usql;
             $order = ' ORDER BY u.firstname ASC, u.lastname';
 
             if ($teachers = $DB->get_records_sql($select.$from.$where.$order, $params)) {
                 if ($usegroups && $coursehasgroups) {
                     try {
-                        $groupteachers = array();
+                        $groupteachers = [];
                         $usergroupings = groups_get_user_groups($COURSE->id, $USER->id);
                         if (empty($usergroupings)) {
                             throw new Exception('nogroupmembership');
@@ -129,13 +119,13 @@ class block_messageteacher extends block_base {
                     }
                 }
 
-                $items = array();
+                $items = [];
                 foreach ($teachers as $teacher) {
-                    $urlparams = array (
+                    $urlparams = [
                         'courseid' => $COURSE->id,
                         'referurl' => $this->page->url->out(),
-                        'recipientid' => $teacher->id
-                    );
+                        'recipientid' => $teacher->id,
+                    ];
                     $url = new moodle_url('/blocks/messageteacher/message.php', $urlparams);
                     $picture = '';
                     if (get_config('block_messageteacher', 'showuserpictures')) {
@@ -150,7 +140,7 @@ class block_messageteacher extends block_base {
                         'class' => 'messageteacher_link',
                         'data-courseid' => $COURSE->id,
                         'data-referurl' => $this->page->url->out(),
-                        'data-recipientid' => $teacher->id
+                        'data-recipientid' => $teacher->id,
                     ];
                     $items[] = html_writer::tag('a', $picture.$name, $attrs);
                 }
@@ -161,7 +151,7 @@ class block_messageteacher extends block_base {
                 ]);
             }
 
-            $PAGE->requires->js_call_amd('block_messageteacher/form', 'init');
+            $this->page->requires->js_call_amd('block_messageteacher/form', 'init');
         } else {
             $this->content->text = "No teacher role defined";
         }
